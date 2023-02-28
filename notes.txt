@@ -1,0 +1,54 @@
+Front End?
+    view that's rendered
+    user interface, client
+    limited amount of storage
+    user experience
+    html, css, dom manipulation
+    working off wireframes
+
+    *Designing how a request is sent
+    *Handling a response
+
+Back end?
+    databases
+    servers
+    frameworks
+    send response to clients
+    SQL
+    Sequelize/ORMs
+    RDBMS/MongoDB
+    Express
+
+    *Handle requests
+    *Design responses
+
+How to define a route handler
+    What is the HTTP method?
+        app methods:
+        get(), post(), put(), patch(), delete()
+        all(), use()
+    What is the path?
+        string, array of strings
+            '/test', ['/test', '/try'], Regular Expressions
+    Middleware??
+        optional
+    Define a response
+        send(), // if passed a string, will send a string response, otherwise converts to json
+        json(), // always responds with json
+        status(), redirect(), render()
+    
+How do we take user input?
+    req.body
+        requires app.use(express.json())
+        Often used for taking in form data
+    req.params
+        defined in end point path
+        adds property of that name to req.params
+    req.query
+        optional additions to a request
+        typically used for conditionally augmenting search queries
+
+Route order matters!
+    Express runs top to bottom
+        A request checks every endpoint to see if it's a match
+    Most specific at the top, dynamic below
