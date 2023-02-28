@@ -29,8 +29,6 @@ app.get('/:movieName', (req, res) => {
 })
 
 
-
-
 app.all('/', (req, res) => {
     console.log(req)
     res.status(201)
