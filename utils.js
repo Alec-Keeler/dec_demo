@@ -20,14 +20,15 @@ const breakfastCheckCooked = (req, res, next) => {
 }
 
 const checkErrors = (req, res, next) => {
-    if (req.errors) {
-        console.log('errors')
+    if (Object.keys(req.errors).length) {
+        console.log('test?')
+        res.status(401)
+        return res.json({
+            title: "There were some errors",
+            errors: req.errors
+        })
     }
-    res.status(401)
-    res.json({
-        title: "There were some errors",
-        errors: req.errors
-    })
+    next()
 }
 
 const errorHandlers = [errCollection, breakfastCheckName, breakfastCheckCooked, checkErrors]
