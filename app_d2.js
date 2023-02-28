@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 app.get('/resource', (req, res) => {
-    res.send("Fetch all the resources")
+    res.send('Fetch all the resources')
 })
 
 app.get('/respource/:id', (req, res) => {
@@ -11,6 +11,10 @@ app.get('/respource/:id', (req, res) => {
 
 app.post('/resource', (req, res) => {
     res.send('Create a new instance of the resource')
+})
+
+app.get('/another-resource', (req, res) => {
+    res.send('Fetch all of another resource')
 })
 
 

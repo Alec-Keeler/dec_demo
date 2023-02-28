@@ -1,3 +1,4 @@
+W10D1
 Front End?
     view that's rendered
     user interface, client
@@ -52,3 +53,6 @@ Route order matters!
     Express runs top to bottom
         A request checks every endpoint to see if it's a match
     Most specific at the top, dynamic below
+
+
+W10D2
