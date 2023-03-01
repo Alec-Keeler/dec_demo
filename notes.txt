@@ -55,4 +55,15 @@ Route order matters!
     Most specific at the top, dynamic below
 
 
-W10D2
+
+W10D3 DB Notes
+
+Animals table
+    name
+    genus
+    biome
+    avg_weight
+    is_vertebrate
+    diet
+    is_cute
+
