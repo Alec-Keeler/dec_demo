@@ -75,3 +75,42 @@ JOIN animals ON (animal_biomes.animal_id = animals.id)
 JOIN diets ON (animals.diet_id = diets.id)
 JOIN biomes ON (animal_biomes.biome_id = biomes.id)
 WHERE animals.id = 3;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Get biome names for all herbivore animals
+SELECT biomes.name
+FROM biomes
+JOIN animal_biomes ON (biomes.id = animal_biomes.biome_id)
+JOIN animals ON (animal_biomes.animal_id = animals.id)
+JOIN diets ON (animals.diet_id = diets.id)
+WHERE diets.type = 'Herbivore';
+
+SELECT biomes.name
+FROM biomes
+WHERE id IN (
+    SELECT biome_id
+    FROM animal_biomes
+    WHERE animal_id IN (
+        SELECT id
+        FROM animals
+        WHERE diet_id IN (
+            SELECT id
+            FROM diets
+            WHERE type = 'Herbivore'
+        )
+    )
+);
