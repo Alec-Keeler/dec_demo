@@ -88,9 +88,9 @@ Animals table
 {name: 'Mountain Goat', genus: 'Oreamnos', avgWeight: 150, isVertebrate: true, isCute: true, dietTypeId: 2},
 
 
-{type: 'Herbivore'}
-{type: 'Omnivore'}
-{type: 'Carnivore'}
+{type: 'Herbivore'},
+{type: 'Omnivore'},
+{type: 'Carnivore'},
 {type: 'Piscivore'}
 
 

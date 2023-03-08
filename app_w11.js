@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-const { Animal } = require('./db/models')
+const { Animal, Diet, AnimalBiome, Biome } = require('./db/models')
 const { Op } = require("sequelize");
 
 
@@ -77,6 +77,63 @@ app.delete('/animals/:id', async (req, res) => {
     res.json({
         message: `Animal with an id of ${req.params.id} has been deleted`
     })
+})
+
+app.get('/diets/:id', async (req, res) => {
+    // const diet = await Diet.findByPk(req.params.id)
+    // const animals = await diet.getAnimals()
+    // res.json({
+    //     diet,
+    //     animals
+    // })
+
+    // const data = await Diet.findByPk(req.params.id, {
+    //     include: Animal
+    // })
+    const data = await Diet.findByPk(req.params.id, {
+        // include: [Animal, AnimalBiome, Biome]
+        include: {
+            model: Animal,
+            include: {
+                model: Biome
+            }
+        }
+    })
+
+    const altData = await Animal.findOne({
+        attributes: [],
+        where: {
+            name: 'Red Panda'
+        }, 
+        include: [Diet, {
+            model: Biome,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
+            // include: OtherModel
+        }]
+    })
+
+    res.json(altData)
+})
+
+app.post('/diets/:id/animals', async (req, res) => {
+    const diet = await Diet.findByPk(req.params.id)
+    const { name, genus, avgWeight, isVertebrate, isCute } = req.body
+    const newAnimal = await diet.createAnimal({
+        name, genus, avgWeight, isVertebrate, isCute
+    })
+    res.json({
+        animal: newAnimal
+    })
+})
+
+app.post('/animals/:id/biomes', async (req, res) => {
+    const {biomeIds} = req.body
+    const animal = await Animal.findByPk(req.params.id)
+    await animal.addBiomes(biomeIds)
+    res.send('Associated your list of biomes to the specified animal')
 })
 
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`))
