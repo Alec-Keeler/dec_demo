@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app_d3.js",
-    "dev": "nodemon app_d3.js"
+    "start": "node app_w11.js",
+    "dev": "nodemon app_w11.js"
   },
   "repository": {
     "type": "git",
