@@ -67,18 +67,47 @@ Animals table
     diet
     is_cute
 
-{name: 'Red Panda', genus: 'Ailurus', avgWeight: 7.4, isVertebrate: true, isCute: true},
-{name: 'Raven', genus: 'Corvid', avgWeight: 2.5, isVertebrate: true, isCute: true},
-{name: 'Tiger', genus: 'Panthera', avgWeight: 400, isVertebrate: true, isCute: true},
-{name: 'Llama', genus: 'lama', avgWeight: 440, isVertebrate: true, isCute: true},
+
+
+    
+
+{name: 'Red Panda', genus: 'Ailurus', avgWeight: 7.4, isVertebrate: true, isCute: true, dietTypeId: 1},
+{name: 'Raven', genus: 'Corvid', avgWeight: 2.5, isVertebrate: true, isCute: true, dietTypeId: 2},
+{name: 'Tiger', genus: 'Panthera', avgWeight: 400, isVertebrate: true, isCute: true, dietTypeId: 3},
+{name: 'Llama', genus: 'lama', avgWeight: 440, isVertebrate: true, isCute: true, dietTypeId: 4},
 {name: 'Rusty-spotted Cat', genus: 'Prionailurus', avgWeight: 3, isVertebrate: true, isCute: true} ,
-{name: 'Blob Fish', genus: 'Spineless sculpins', avgWeight: 20, isVertebrate: false, isCute: false},
-{name: 'Lowland Streaked Tenrec', genus: 'Hemicentetes', avgWeight: 4.4, isVertebrate: true, isCute: true},
-{name: 'Western Lowland Gorilla', genus: 'Gorilla', avgWeight: 310, isVertebrate: true, isCute: true},
-{name: 'Pallas''s cat', genus: 'Otocolobus', avgWeight: 7.7, isVertebrate: true, isCute: true},
-{name: 'Shoebill Stork', genus: 'Balaeniceps', avgWeight: 12, isVertebrate: true, isCute: false},
-{name: 'Orangutan', genus: 'Pongo', avgWeight: 120, isVertebrate: true, isCute: false},
-{name: 'Sloth', genus: 'Bradypus', avgWeight: 14,  isVertebrate: true, isCute: true},
-{name: 'Milk Snake', genus: 'Lampropeltis', avgWeight: .5, isVertebrate: true, isCute: false},
-{name: 'American Crow', genus: 'Corvid', avgWeight: 1, isVertebrate: true, isCute: false},
-{name: 'Mountain Goat', genus: 'Oreamnos', avgWeight: 150, isVertebrate: true, isCute: true}
+{name: 'Blob Fish', genus: 'Spineless sculpins', avgWeight: 20, isVertebrate: false, isCute: false, dietTypeId: 1},
+{name: 'Lowland Streaked Tenrec', genus: 'Hemicentetes', avgWeight: 4.4, isVertebrate: true, isCute: true, dietTypeId: 2},
+{name: 'Western Lowland Gorilla', genus: 'Gorilla', avgWeight: 310, isVertebrate: true, isCute: true, dietTypeId: 3},
+{name: 'Pallas''s cat', genus: 'Otocolobus', avgWeight: 7.7, isVertebrate: true, isCute: true, dietTypeId: 4},
+{name: 'Shoebill Stork', genus: 'Balaeniceps', avgWeight: 12, isVertebrate: true, isCute: false, dietTypeId: 1},
+{name: 'Orangutan', genus: 'Pongo', avgWeight: 120, isVertebrate: true, isCute: false, dietTypeId: 2},
+{name: 'Sloth', genus: 'Bradypus', avgWeight: 14,  isVertebrate: true, isCute: true, dietTypeId: 3},
+{name: 'Milk Snake', genus: 'Lampropeltis', avgWeight: .5, isVertebrate: true, isCute: false, dietTypeId: 4},
+{name: 'American Crow', genus: 'Corvid', avgWeight: 1, isVertebrate: true, isCute: false, dietTypeId: 1},
+{name: 'Mountain Goat', genus: 'Oreamnos', avgWeight: 150, isVertebrate: true, isCute: true, dietTypeId: 2},
+
+
+{type: 'Herbivore'}
+{type: 'Omnivore'}
+{type: 'Carnivore'}
+{type: 'Piscivore'}
+
+
+{name: 'temperate forest', exampleLocation: 'Eastern Deciduous Forest'},
+{name: 'tropical forest', exampleLocation: 'Amazon Rain Forest'},
+{name: 'woodland', exampleLocation: 'East African Plains'},
+{name: 'alpine tundra', exampleLocation: 'North Cascades'},
+{name: 'urban', exampleLocation: 'Any city lol'},
+{name: 'temperate grassland', exampleLocation: 'Eurasion steppes'},
+{name: 'desert', exampleLocation: 'Mojave Desert'},
+{name: 'ocean', exampleLocation: 'Pacific Ocean'},
+
+{animalId: 1, biomeId: 1},
+{animalId: 1, biomeId: 3},
+{animalId: 2, biomeId: 5},
+{animalId: 3, biomeId: 4},
+{animalId: 3, biomeId: 6},
+{animalId: 4, biomeId: 7},
+{animalId: 4, biomeId: 8},
+{animalId: 2, biomeId: 1},

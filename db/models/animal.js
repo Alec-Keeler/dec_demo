@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Animal.belongsTo(models.Diet, {foreignKey: 'dietTypeId'})
+      // FROM Animals
+      // JOIN Diets ON (animals.dietTypeId = diets.id)
+
+      Animal.belongsToMany(models.Biome, {
+        through: models.AnimalBiome,
+        foreignKey: 'animalId',
+        otherKey: 'biomeId'
+      })
     }
   }
   Animal.init({
@@ -31,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     genus: DataTypes.STRING,
     avgWeight: DataTypes.FLOAT,
     isVertebrate: DataTypes.BOOLEAN,
-    isCute: DataTypes.BOOLEAN
+    isCute: DataTypes.BOOLEAN,
+    dietTypeId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Animal',
