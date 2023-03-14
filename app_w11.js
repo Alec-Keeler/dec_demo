@@ -176,4 +176,64 @@ app.get('/animals/agg', async (req, res) => {
     })
 })
 
+const pagination = (req, res, next) => {
+    let { size, page } = req.query
+
+    if (!size) size = 5
+    if (!page) page = 1
+
+    const offset = size * (page - 1)
+    let pagination = {}
+    if (page >= 1 && size >= 1) {
+        pagination.limit = size
+        pagination.offset = offset
+    }
+    req.pagination = pagination
+    next()
+}
+
+app.get('/search', pagination, async(req, res) => {
+    const {genus, name, type, biomes} = req.query
+    let query = {
+        where: {},
+        include: [],
+        ...req.pagination
+    }
+    // console.log(req.query)
+    if (genus) {
+        query.where.genus = genus
+    }
+
+    if (name) {
+        query.where.name = {
+            [Op.like]: `%${name}%`
+        }
+    }
+
+    if (type) {
+        query.include.push({
+            model: Diet,
+            where: {
+                type
+            }
+        })
+    }
+
+    if (biomes) {
+        query.include.push({
+            model: Biome,
+            where: {
+                name: biomes
+            },
+            attributes: ['name', 'exampleLocation'],
+            through: {
+                attributes: []
+            }
+        })
+    }
+
+    const animals = await Animal.findAll(query)
+    res.json(animals)
+})
+
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`))
