@@ -1,0 +1,43 @@
+extends layout.pug
+
+block content
+    h1 Add a new animal to the IADB!
+    form(action="/animals" method="post")
+        label Name:
+        input(type="text" name="name" value=input.name)
+        if errors
+            if errors.needName
+                p= errors.needName
+            if errors.longName 
+                p= errors.longName
+            if errors.noBlue
+                p= errors.noBlue
+        br 
+        label Genus:
+        input(type="text" name="genus" value=input.genus)
+        if errors
+            if errors.needGenus
+                p= errors.needGenus
+        br
+        label Average Weight:
+        input(type="text" name="avgWeight" value=input.avgWeight)
+        if errors
+            if errors.needAvgWeight
+                p= errors.needAvgWeight
+        br
+        label Is This Animal a Vertebrate?
+        select(name="isVertebrate") 
+            option(value="true") Yes
+            option(value="false") No
+        br
+        label Is This Animal Cute?
+        select(name="isCute") 
+            option(value="true") Yes
+            option(value="false") No
+        br
+        label What diet does this animal have?
+        select(name="dietTypeId") 
+            each diet in diets
+                option(value=diet.id)= diet.type
+        br
+        button Create

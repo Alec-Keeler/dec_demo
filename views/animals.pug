@@ -1,0 +1,16 @@
+extends layout.pug
+
+block content
+    each animal in animals
+        div.animal-container
+            h2= animal.name
+            p Genus: #{animal.genus}
+            p Average Weight:  #{animal.avgWeight}
+            if animal.isVertebrate
+                p This animal is a vertebrate
+            else
+                p This animal is an invertebrate
+            if animal.isCute
+                p This animal is cute
+            else
+                p This animal is not cute

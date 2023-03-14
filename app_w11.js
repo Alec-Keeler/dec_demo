@@ -3,13 +3,20 @@ const app = express()
 require('dotenv').config()
 const { Animal, Diet, AnimalBiome, Biome } = require('./db/models')
 const { Op } = require("sequelize");
+const {errorHandlers} = require("./utils")
 
 
 // Query methods: findAll, findOne, findByPk
 
 app.use(express.json())
+app.use(express.static('./assets'))
 
-app.get('/animals/:id', async (req, res) => {
+//read urlencoded request bodies
+app.use(express.urlencoded())
+//allow pug
+app.set('view engine', 'pug')
+
+app.get('/animals/:id(\\d+)', async (req, res) => {
     console.log(req.params)
     // const animal = await Animal.findOne({
     //     attributes: ['name', 'genus'], // SELECT
@@ -25,23 +32,30 @@ app.get('/animals/:id', async (req, res) => {
 
 app.get('/animals', async (req, res) => {
     const animals = await Animal.findAll({
-        attributes: ['name', 'genus'],
-        where: {
+        // attributes: ['name', 'genus'],
+        // where: {
             // genus: 'Corvid'
-            name: {
-                [Op.substring]: `${req.query.animal}`
-            }
-        },
+            // name: {
+            //     [Op.substring]: `${req.query.animal}`
+            // }
+        // },
         // order: [['genus', 'DESC'], ['name']]
     });
 
-    res.json(animals)
+    // res.json(animals)
+    res.render('animals', {animals})
 })
 
+app.get('/add-animal', async(req, res) => {
+    const diets = await Diet.findAll({
+        order: ['type']
+    })
+    res.render('create-animal', {diets, input: {}})
+})
 
 // Insert methods: create, build (w/ save, validate)
-app.post('/animals', async (req, res) => {
-    const {name, genus, avgWeight, isVertebrate, isCute} = req.body
+app.post('/animals', errorHandlers, async (req, res) => {
+    const {name, genus, avgWeight, isVertebrate, isCute, dietTypeId} = req.body
     // const animal = Animal.build({
     //     name,
     //     genus,
@@ -52,10 +66,18 @@ app.post('/animals', async (req, res) => {
     // console.log(animal)
     // // animal.validate()
     // await animal.save()
+    if (Object.keys(req.errors).length) {
+        const diets = await Diet.findAll({
+            order: ['type']
+        })
+        res.render('create-animal', { diets, errors: req.errors, input: req.body })
+    }
+
     const animal = await Animal.create({
-        name, genus, avgWeight, isVertebrate, isCute
+        name, genus, avgWeight, isVertebrate, isCute, dietTypeId
     })
     res.json(animal)
+
 })
 
 //  Model.update({where:{}})
@@ -134,6 +156,24 @@ app.post('/animals/:id/biomes', async (req, res) => {
     const animal = await Animal.findByPk(req.params.id)
     await animal.addBiomes(biomeIds)
     res.send('Associated your list of biomes to the specified animal')
+})
+
+app.get('/animals/agg', async (req, res) => {
+    const animals = await Animal.findAll()
+
+    const count = await Animal.count()
+    const minAvgWeight = await Animal.min('avgWeight')
+    const maxAvgWeight = await Animal.max('avgWeight')
+    const sumAvgWeight = await Animal.sum('avgWeight')
+    // console.log(sumAvgWeight/count)
+
+    res.json({
+        animals,
+        count,
+        maxAvgWeight,
+        minAvgWeight,
+        averageAvgWeight: sumAvgWeight/count
+    })
 })
 
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`))

@@ -111,3 +111,43 @@ Animals table
 {animalId: 4, biomeId: 7},
 {animalId: 4, biomeId: 8},
 {animalId: 2, biomeId: 1},
+
+
+const animals = [
+    {
+        name: 'American Crow',
+        biomes: [
+            'tropical forest',
+            'woodland',
+        ]
+    },
+    {
+        name: 'Mountain Goat',
+        biomes: [
+            'alpine tundra',
+            'urban',
+        ]
+    },
+    {
+        name: 'Milk Snake',
+        biomes: [
+            'temperate forest',
+            'woodland',
+        ]
+    },
+    {
+        name: 'Sloth',
+        biomes: [
+            'tropical forest',
+            'woodland',
+            'urban',
+        ]
+    },
+    {
+        name: 'Orangutan',
+        biomes: [
+            'temperate forest',
+            'alpine tundra',
+        ]
+    },
+]

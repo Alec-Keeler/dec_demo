@@ -3,6 +3,49 @@ const errCollection = (req, res, next) => {
     next()
 }
 
+const checkName = (req, res, next) => {
+    const name = req.body.name
+
+    if (!name) {
+        req.errors.needName = "Please provide a name for the new animal"
+    }
+    if (name.length > 150) {
+        req.errors.longName = "Please provide a name that is fewer than 150 characters long"
+    }
+    let words = name.split(' ')
+    if (words.includes('Blue')) {
+        req.errors.noBlue = 'Animals may not be blue!'
+    }
+    next()
+}
+
+const checkGenus = (req, res, next) => {
+    const genus = req.body.genus
+
+    if (!genus) {
+        req.errors.needGenus = 'Please provide this animal\'s genus'
+    }
+    next()
+}
+
+const checkAvgWeight = (req, res, next) => {
+    const avgWeight = req.body.avgWeight
+
+    if (!avgWeight) {
+        req.errors.needAvgWeight = 'Please provide this animal\'s average weight'
+    }
+    next()
+}
+
+
+
+
+
+
+
+
+
+
 const breakfastCheckName = (req, res, next) => {
     if (req.body.name) {
         return next()
@@ -31,6 +74,7 @@ const checkErrors = (req, res, next) => {
     next()
 }
 
-const errorHandlers = [errCollection, breakfastCheckName, breakfastCheckCooked, checkErrors]
+// const errorHandlers = [errCollection, breakfastCheckName, breakfastCheckCooked, checkErrors]
+const errorHandlers = [errCollection, checkName, checkGenus, checkAvgWeight]
 
 module.exports = {errorHandlers}
