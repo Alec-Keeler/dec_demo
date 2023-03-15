@@ -42,8 +42,8 @@ app.get('/animals', async (req, res) => {
         // order: [['genus', 'DESC'], ['name']]
     });
 
-    // res.json(animals)
-    res.render('animals', {animals})
+    res.json(animals)
+    // res.render('animals', {animals})
 })
 
 app.get('/add-animal', async(req, res) => {
@@ -233,6 +233,30 @@ app.get('/search', pagination, async(req, res) => {
     }
 
     const animals = await Animal.findAll(query)
+    res.json(animals)
+})
+
+//show only cute animals
+app.get('/iscute', async(req, res) => {
+    const animals = await Animal.scope(['defaultScope', 'isCute']).findAll({
+        where: {
+            isVertebrate: true
+        }
+    })
+    res.json(animals)
+})
+
+//show only non-cute animals
+app.get('/isnotcute', async(req, res) => {
+    const animals = await Animal.scope(['defaultScope', 'isNotCute']).findAll()
+    res.json(animals)
+})
+
+//show all animals associated to a specified biome
+app.get('/animals/biomes/:id', async(req, res) => {
+    const animals = await Animal.scope(['defaultScope', {
+        method: ['findByBiome', req.params.id]
+    }]).findAll()
     res.json(animals)
 })
 

@@ -45,6 +45,34 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Animal',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    },
+    scopes: {
+      isCute: {
+        where: {
+          isCute: true
+        }
+      },
+      isNotCute: {
+        where: {
+          isCute: false
+        }
+      },
+      findByBiome(value) {
+        const { Biome } = require('../models')
+        return {
+          include: {
+            model: Biome,
+            where: {
+              id: value
+            }
+          }
+        }
+      }
+    }
   });
   return Animal;
 };
