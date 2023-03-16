@@ -4,17 +4,25 @@ require('dotenv').config()
 const { Animal, Diet, AnimalBiome, Biome } = require('./db/models')
 const { Op } = require("sequelize");
 const {errorHandlers} = require("./utils")
-
+const usersRouter = require('./routes/users')
+const cookieParser = require('cookie-parser')
+const {restoreUser, requireAuth} = require('./auth')
 
 // Query methods: findAll, findOne, findByPk
 
 app.use(express.json())
 app.use(express.static('./assets'))
+app.use(cookieParser())
+
+
+app.use(restoreUser)
 
 //read urlencoded request bodies
 app.use(express.urlencoded())
 //allow pug
 app.set('view engine', 'pug')
+
+app.use('/users', usersRouter)
 
 app.get('/animals/:id(\\d+)', async (req, res) => {
     console.log(req.params)
@@ -30,7 +38,7 @@ app.get('/animals/:id(\\d+)', async (req, res) => {
     res.json(animal)
 })
 
-app.get('/animals', async (req, res) => {
+app.get('/animals', requireAuth, async (req, res) => {
     const animals = await Animal.findAll({
         // attributes: ['name', 'genus'],
         // where: {
